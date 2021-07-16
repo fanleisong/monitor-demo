@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.monitor.mapper.ServerStateMapper" >
+  <resultMap id="BaseResultMap" type="com.monitor.po.ServerState" >
+    <result column="PROGRAM" property="program" jdbcType="VARCHAR" />
+    <result column="FUN_DES" property="funDes" jdbcType="VARCHAR" />
+    <result column="RUN_STATE" property="runState" jdbcType="VARCHAR" />
+    <result column="DETAILS" property="details" jdbcType="VARCHAR" />
+    <result column="IP" property="ip" jdbcType="VARCHAR" />
+    <result column="PROCESS" property="process" jdbcType="VARCHAR" />
+    <result column="COLL_TIME" property="collTime" jdbcType="TIMESTAMP" />
+    <result column="UP_TIME" property="upTime" jdbcType="TIMESTAMP" />
+    <result column="id" property="id" jdbcType="BIGINT" />
+  </resultMap>
+  <insert id="insert" parameterType="com.monitor.po.ServerState" >
+    insert into server_state (PROGRAM, FUN_DES, RUN_STATE, 
+      DETAILS, IP, PROCESS, 
+      id)
+    values (#{program,jdbcType=VARCHAR}, #{funDes,jdbcType=VARCHAR}, #{runState,jdbcType=VARCHAR}, 
+      #{details,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{process,jdbcType=VARCHAR}, 
+      #{id,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.monitor.po.ServerState" >
+    insert into server_state
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="program != null" >
+        PROGRAM,
+      </if>
+      <if test="funDes != null" >
+        FUN_DES,
+      </if>
+      <if test="runState != null" >
+        RUN_STATE,
+      </if>
+      <if test="details != null" >
+        DETAILS,
+      </if>
+      <if test="ip != null" >
+        IP,
+      </if>
+      <if test="process != null" >
+        PROCESS,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="program != null" >
+        #{program,jdbcType=VARCHAR},
+      </if>
+      <if test="funDes != null" >
+        #{funDes,jdbcType=VARCHAR},
+      </if>
+      <if test="runState != null" >
+        #{runState,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null" >
+        #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="process != null" >
+        #{process,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getAllActions" parameterType="com.monitor.po.ServerState" resultMap="BaseResultMap" >
+    SELECT * from server_state ;
+  </select>
+
+  <select id="getInfoByIP" parameterType="com.monitor.po.ServerState" resultMap="BaseResultMap" >
+    SELECT * from server_state  where  ip = #{ip};
+  </select>
+</mapper>

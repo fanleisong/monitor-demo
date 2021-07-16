@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.monitor.mapper.WebInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.monitor.po.WebInfo" >
+    <result column="PAGE" property="page" jdbcType="VARCHAR" />
+    <result column="API_NAME" property="apiName" jdbcType="VARCHAR" />
+    <result column="API_URL" property="apiUrl" jdbcType="VARCHAR" />
+    <result column="NUMBER" property="number" jdbcType="BIGINT" />
+    <result column="COLL_TIME" property="collTime" jdbcType="TIMESTAMP" />
+    <result column="UP_TIME" property="upTime" jdbcType="TIMESTAMP" />
+    <result column="id" property="id" jdbcType="BIGINT" />
+  </resultMap>
+  <insert id="insert" parameterType="com.monitor.po.WebInfo" >
+    insert into web_info (PAGE, API_NAME, API_URL, 
+      NUMBER, COLL_TIME, UP_TIME, 
+      id)
+    values (#{page,jdbcType=VARCHAR}, #{apiName,jdbcType=VARCHAR}, #{apiUrl,jdbcType=VARCHAR}, 
+      #{number,jdbcType=BIGINT}, #{collTime,jdbcType=TIMESTAMP}, #{upTime,jdbcType=TIMESTAMP}, 
+      #{id,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.monitor.po.WebInfo" >
+    insert into web_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="page != null" >
+        PAGE,
+      </if>
+      <if test="apiName != null" >
+        API_NAME,
+      </if>
+      <if test="apiUrl != null" >
+        API_URL,
+      </if>
+      <if test="number != null" >
+        NUMBER,
+      </if>
+      <if test="collTime != null" >
+        COLL_TIME,
+      </if>
+      <if test="upTime != null" >
+        UP_TIME,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="page != null" >
+        #{page,jdbcType=VARCHAR},
+      </if>
+      <if test="apiName != null" >
+        #{apiName,jdbcType=VARCHAR},
+      </if>
+      <if test="apiUrl != null" >
+        #{apiUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=BIGINT},
+      </if>
+      <if test="collTime != null" >
+        #{collTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upTime != null" >
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+
+  <select id="getAllActions" parameterType="com.monitor.po.DataInfo" resultMap="BaseResultMap" >
+    SELECT * from web_info ;
+  </select>
+
+</mapper>

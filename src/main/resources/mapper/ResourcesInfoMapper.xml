@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.monitor.mapper.ResourcesInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.monitor.po.ResourcesInfo" >
+    <result column="IP" property="ip" jdbcType="VARCHAR" />
+    <result column="CPU_RATE" property="cpuRate" jdbcType="REAL" />
+    <result column="MEM_RATE" property="memRate" jdbcType="REAL" />
+    <result column="DISK_RATE" property="diskRate" jdbcType="REAL" />
+    <result column="COLL_TIME" property="collTime" jdbcType="TIMESTAMP" />
+    <result column="UP_TIME" property="upTime" jdbcType="TIMESTAMP" />
+    <result column="id" property="id" jdbcType="BIGINT" />
+  </resultMap>
+  <insert id="insert" parameterType="com.monitor.po.ResourcesInfo" >
+    insert into resources_info (IP, CPU_RATE, MEM_RATE, 
+      DISK_RATE, COLL_TIME, UP_TIME, 
+      id)
+    values (#{ip,jdbcType=VARCHAR}, #{cpuRate,jdbcType=REAL}, #{memRate,jdbcType=REAL}, 
+      #{diskRate,jdbcType=REAL}, #{collTime,jdbcType=TIMESTAMP}, #{upTime,jdbcType=TIMESTAMP}, 
+      #{id,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.monitor.po.ResourcesInfo" >
+    insert into resources_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ip != null" >
+        IP,
+      </if>
+      <if test="cpuRate != null" >
+        CPU_RATE,
+      </if>
+      <if test="memRate != null" >
+        MEM_RATE,
+      </if>
+      <if test="diskRate != null" >
+        DISK_RATE,
+      </if>
+      <if test="collTime != null" >
+        COLL_TIME,
+      </if>
+      <if test="upTime != null" >
+        UP_TIME,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="cpuRate != null" >
+        #{cpuRate,jdbcType=REAL},
+      </if>
+      <if test="memRate != null" >
+        #{memRate,jdbcType=REAL},
+      </if>
+      <if test="diskRate != null" >
+        #{diskRate,jdbcType=REAL},
+      </if>
+      <if test="collTime != null" >
+        #{collTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upTime != null" >
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getAllActions" parameterType="com.monitor.po.ResourcesInfo" resultMap="BaseResultMap" >
+    SELECT * from resources_info ;
+  </select>
+
+  <select id="getInfoByIP" parameterType="com.monitor.po.ResourcesInfo" resultMap="BaseResultMap" >
+    SELECT * from resources_info  where  ip = #{ip};
+  </select>
+
+</mapper>

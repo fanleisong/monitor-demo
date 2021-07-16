@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.monitor.mapper.AlarmInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.monitor.po.AlarmInfo" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="IP" property="ip" jdbcType="VARCHAR" />
+    <result column="ALAM_INFO" property="alamInfo" jdbcType="VARCHAR" />
+    <result column="ALAM_TIME" property="alamTime" jdbcType="TIMESTAMP" />
+    <result column="UP_TIME" property="upTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.monitor.po.AlarmInfo" >
+    insert into alarm_info (id, IP, ALAM_INFO, 
+      ALAM_TIME, UP_TIME)
+    values (#{id,jdbcType=BIGINT}, #{ip,jdbcType=VARCHAR}, #{alamInfo,jdbcType=VARCHAR}, 
+      #{alamTime,jdbcType=TIMESTAMP}, #{upTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.monitor.po.AlarmInfo" >
+    insert into alarm_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ip != null" >
+        IP,
+      </if>
+      <if test="alamInfo != null" >
+        ALAM_INFO,
+      </if>
+      <if test="alamTime != null" >
+        ALAM_TIME,
+      </if>
+      <if test="upTime != null" >
+        UP_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="alamInfo != null" >
+        #{alamInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="alamTime != null" >
+        #{alamTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upTime != null" >
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getAllActions" parameterType="com.monitor.po.AlarmInfo" resultMap="BaseResultMap" >
+    SELECT * from alarm_info ;
+  </select>
+
+  <select id="getByTime" parameterType="com.monitor.po.AlarmInfo" resultMap="BaseResultMap" >
+    SELECT * from alarm_info ;
+  </select>
+
+  <select id="getNowAlarm" parameterType="com.monitor.po.AlarmInfo" resultMap="BaseResultMap" >
+    SELECT * from alarm_info where to_days(ALAM_TIME) = to_days(now());
+  </select>
+
+  <select id="getHourAlarm" parameterType="com.monitor.po.AlarmInfo" resultMap="BaseResultMap" >
+    select*from alarm_info where now() <![CDATA[<=]]>  SUBDATE(ALAM_TIME,interval -1 hour);
+  </select>
+
+</mapper>
